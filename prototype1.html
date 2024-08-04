@@ -1,0 +1,143 @@
+<style>
+    :root {
+        --link-color-h: 30;
+        --link-color-s: 80%;
+        --link-color-l: 50%;
+        --scale: 1;
+
+        --link-color: hsl(var(--link-color-h), var(--link-color-s), var(--link-color-l));
+
+        --link-color-10: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .1));
+        --link-color-20: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .2));
+        --link-color-30: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .3));
+        --link-color-40: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .4));
+        --link-color-50: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .5));
+        --link-color-60: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .6));
+        --link-color-70: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .7));
+        --link-color-80: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .8));
+        --link-color-90: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) / .9));
+
+        --link-color-d-10: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .1));
+        --link-color-d-20: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .2));
+        --link-color-d-30: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .3));
+        --link-color-d-40: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .4));
+        --link-color-d-50: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .5));
+        --link-color-d-60: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .6));
+        --link-color-d-70: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .7));
+        --link-color-d-80: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .8));
+        --link-color-d-90: hsl(var(--link-color-h), var(--link-color-s), calc(var(--link-color-l) * .9));
+    }
+
+    html,
+    body {
+        margin: 0;
+        font-family: system-ui;
+    }
+
+    .title-bar {
+        height: calc(50px * var(--scale));
+        color: var(--link-color-70);
+        background: linear-gradient(90deg, var(--link-color-d-80), var(--link-color-d-90));
+        border-bottom: 1px var(--link-color-d-60) solid;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0px calc(18px * var(--scale));
+        font-size: calc(18px * var(--scale));
+    }
+
+    .content {
+        color: var(--link-color-d-50);
+        background-color: var(--link-color);
+        display: grid;
+        justify-content: center;
+        justify-items: center;
+        height: calc(100vh - calc(51px * var(--scale)));
+        font-size: calc(16px * var(--scale));
+    }
+
+    .content h1 {
+        color: var(--link-color-d-20);
+        font-size: calc(32px * var(--scale));
+    }
+
+    .panel {
+        width: calc(244px * var(--scale));
+        height: max-content;
+        padding: calc(8px * var(--scale));
+        margin: calc(8px * var(--scale));
+        background: var(--link-color-d-90);
+        border: 1px var(--link-color-d-80) solid;
+        border-radius: calc(4px * var(--scale));
+    }
+
+    .row {
+        color: var(--link-color-d-40);
+        padding: 0 calc(2px * var(--scale));
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+    }
+
+    input {
+        width: calc(220px * var(--scale));
+    }
+
+    #scale {
+        width: calc(190px * var(--scale));
+        
+    }
+</style>
+<header>
+    <div class="title-bar">SWADDLE</div>
+</header>
+<div class="content">
+    <form action="/get">
+        <div class="panel">
+
+            <div class="row">
+                h:
+                <input type="range" name="h" min="0" max="360" step="1" value="30" id="color">
+            </div>
+            <div class="row">
+                s:
+                <input type="range" name="s" min="0" max="100" step="1" value="80" id="saturation">
+            </div>
+            <div class="row">
+                l:
+                <input type="range" name="l" min="0" max="100" step="1" value="50" id="lightness">
+            </div>
+            <br>
+            <input style="padding: 5px;border-radius:20px;align-self: center;align-items: center;margin:auto" type="submit" value="Apply">
+        </div>
+        
+    </form>
+</div>
+<script>
+    //properties
+    var h = 30;
+    var s = 80;
+    var l = 50;
+    var scale = 1;
+
+    document.body.addEventListener("input", function (event) { UpdateLayout(event.target) });
+
+    function UpdateLayout(elem) {
+        switch (elem.id) {
+            case "color":
+                h = elem.value;
+                break;
+            case "saturation":
+                s = elem.value;
+                break;
+            case "lightness":
+                l = elem.value;
+                break;
+            case "scale":
+                scale = elem.value;
+                break;
+        }
+
+        document.documentElement.style.cssText = "--link-color-h: " + h + "; --link-color-s: " + s + "%" + "; --link-color-l: " + l + "%" + "; --scale: " + scale;
+    }
+</script>
